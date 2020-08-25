@@ -1,0 +1,29 @@
+#!/usr/bin/expect
+set timeout -1
+set WEBMIN_USERNAME [lindex $argv 0]
+set WEBMIN_PASSWORD [lindex $argv 1]
+set WEBMIN_VERSION [lindex $argv 2]
+
+spawn "/opt/webmin-$WEBMIN_VERSION/setup.sh"
+
+expect "Config file directory " {send "\r"}
+
+expect "Log file directory " {send "/var/log/webmin\r"}
+
+expect "Full path to perl (default /usr/bin/perl):" {send "\r"}
+
+expect "Operating system:" {send "45\r"}
+
+expect "Version:" {send "9\r"}
+
+expect "Web server port (default 10000):" {send "\r"}
+
+expect "Login name (default admin):" {send "$WEBMIN_USERNAME\r"}
+
+expect "Login password:" {send "$WEBMIN_PASSWORD\r"}
+
+expect "Password again:" {send "$WEBMIN_PASSWORD\r"}
+
+expect "Use SSL (y/n):" {send  "y\r"}
+
+expect eof
